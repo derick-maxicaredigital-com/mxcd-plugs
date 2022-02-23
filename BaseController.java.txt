@@ -1,0 +1,57 @@
+package com.maxicaredigital.@model.controller;
+
+import com.maxicaredigital.@model.model.@Model;
+import com.maxicaredigital.@model.services.@ModelService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@CrossOrigin(origins = "http://localhost:3000")
+@RestController
+@RequestMapping("/api/v1/")
+public class @ModelController {
+
+    private final @ModelService @modelService;
+
+    public @ModelController(@ModelService @modelService) {
+        this.@modelService = @modelService;
+    }
+
+    @PostMapping("/@models")
+    public @Model create@Model(@RequestBody @Model @model) {
+        return @modelService.create@Model(@model);
+    }
+
+    @GetMapping("/@models")
+    public List<@Model> getAll@Models() {
+        return  @modelService.getAll@Models();
+    }
+
+    @DeleteMapping("/@models/{id}")
+    public ResponseEntity<Map<String,Boolean>> delete@Model(@PathVariable Long id) {
+        boolean deleted = false;
+        deleted = @modelService.delete@Model(id);
+        Map<String,Boolean> response = new HashMap<>();
+        response.put("deleted", deleted);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/@models/{id}")
+    public ResponseEntity<@Model> get@ModelById(@PathVariable Long id) {
+        @Model @model = null;
+        @model = @modelService.get@ModelById(id);
+        return ResponseEntity.ok(@model);
+    }
+
+    @PutMapping("/@models/{id}")
+    public ResponseEntity<@Model> update@Model(@PathVariable Long id,
+                                                   @RequestBody @Model @model) {
+        @model = @modelService.update@Model(id, @model);
+        return ResponseEntity.ok(@model);
+    }
+
+}
